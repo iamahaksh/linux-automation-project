@@ -62,25 +62,71 @@ nano automation.sh
 
 ### 🔹 Step 3: Add Script Code
 
-```bash
+```
 #!/bin/bash
 
-echo "Starting Automation..."
+# Log file
+LOG_FILE="/var/log/automation.log"
 
-# Create user
-sudo useradd testuser
-echo "User created"
+echo "========== Automation Started ==========" | tee -a $LOG_FILE
+DATE=$(date)
+echo "Date: $DATE" | tee -a $LOG_FILE
 
-# Delete old files
-find /tmp -type f -mtime +7 -delete
-echo "Old files deleted"
+# -------------------------------
+# 1. Create User (Safe Way)
+# -------------------------------
 
-# Check disk usage
-df -h
+USERNAME="testuser"
 
-echo "Task Completed"
-```
+if id "$USERNAME" &>/dev/null
+then
+    echo "User '$USERNAME' already exists" | tee -a $LOG_FILE
+else
+    sudo useradd "$USERNAME"
+    if [ $? -eq 0 ]; then
+        echo "User '$USERNAME' created successfully" | tee -a $LOG_FILE
+    else
+        echo "Failed to create user '$USERNAME'" | tee -a $LOG_FILE
+    fi
+fi
 
+# -------------------------------
+# 2. Delete Old Files
+# -------------------------------
+
+echo "Cleaning old files from /tmp..." | tee -a $LOG_FILE
+
+DELETED_FILES=$(find /tmp -type f -mtime +7 2>/dev/null)
+
+if [ -z "$DELETED_FILES" ]; then
+    echo "No old files found" | tee -a $LOG_FILE
+else
+    find /tmp -type f -mtime +7 -delete
+    echo "Old files deleted successfully" | tee -a $LOG_FILE
+fi
+
+# -------------------------------
+# 3. Check Disk Usage
+# -------------------------------
+
+echo "Disk Usage:" | tee -a $LOG_FILE
+df -h | tee -a $LOG_FILE
+
+# -------------------------------
+# 4. Memory Usage (NEW FEATURE)
+# -------------------------------
+
+echo "Memory Usage:" | tee -a $LOG_FILE
+free -h | tee -a $LOG_FILE
+
+# -------------------------------
+# 5. System Uptime (NEW FEATURE)
+# -------------------------------
+
+echo "System Uptime:" | tee -a $LOG_FILE
+uptime | tee -a $LOG_FILE
+
+echo "========== Automation Completed ==========" | tee -a $LOG_FILE
 ---
 
 ### 🔹 Step 4: Give Permission
