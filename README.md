@@ -127,7 +127,6 @@ echo "System Uptime:" | tee -a $LOG_FILE
 uptime | tee -a $LOG_FILE
 
 echo "========== Automation Completed ==========" | tee -a $LOG_FILE
----
 
 ### 🔹 Step 4: Give Permission
 
@@ -153,37 +152,4 @@ chmod +x automation.sh
 
 ---
 
-## 🧠 Key Learnings
 
-* Writing Bash scripts
-* Automating system tasks
-* Using Linux commands like:
-
-  * `useradd`
-  * `find`
-  * `df -h`
-
----
-
-## ⚠️ Challenges Faced
-
-* Permission issues while creating user
-* Understanding file deletion conditions
-* Script execution errors
-
----
-
-## 💼 Resume Description
-
-Automated routine Linux system administration tasks using Bash scripting, including user management, file cleanup, and disk monitoring.
-
----
-
-## 🔮 Future Improvements
-
-* Add logging functionality
-* Add error handling
-* Schedule script using cron jobs
-* Add email notifications
-
----
