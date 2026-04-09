@@ -131,12 +131,12 @@ echo "========== Automation Completed ==========" | tee -a $LOG_FILE
 ### 🔹 Step 4: Give Permission
 
 ```bash
-chmod +x automation.sh
 ```
 
 ---
+### 🔹 Step 5: chmod +x automation.sh
 
-### 🔹 Step 5: Run Script
+### 🔹 Step 6 : Run Script
 
 ```bash
 ./automation.sh
